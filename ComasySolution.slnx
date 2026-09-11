@@ -1,1 +1,6 @@
-<Solution />
+<Solution>
+  <Project Path="Comasy.Api/Comasy.Api.csproj" />
+  <Project Path="Comasy.Core/Comasy.Core.csproj" />
+  <Project Path="Comasy.Data/Comasy.Data.csproj" />
+  <Project Path="Comasy.Web/Comasy.Web.csproj" />
+</Solution>
