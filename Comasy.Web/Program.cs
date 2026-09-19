@@ -1,3 +1,6 @@
+using Comasy.Data;
+using Microsoft.AspNetCore.Identity;
+
 namespace Comasy.Web
 {
     public class Program
@@ -5,6 +8,23 @@ namespace Comasy.Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDataLayer(builder.Configuration);
+
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<ComasyDbContext>() 
+            .AddDefaultTokenProviders(); 
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/Denied";
+            }); 
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -22,6 +42,7 @@ namespace Comasy.Web
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();
