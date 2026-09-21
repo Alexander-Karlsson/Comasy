@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Comasy.Core.Interfaces;
+using Comasy.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +15,8 @@ namespace Comasy.Data
             services.AddDbContext<ComasyDbContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IPageRepository, PageRepository>();
 
 
             return services;
