@@ -17,6 +17,7 @@ namespace Comasy.Data
                     configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IPageRepository, PageRepository>();
+            services.AddScoped<IMenuItemRepository, MenuItemRepository>();
 
 
             return services;
