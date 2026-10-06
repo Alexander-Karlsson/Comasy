@@ -1,3 +1,4 @@
+using Comasy.Core;
 using Comasy.Data;
 using Microsoft.AspNetCore.Identity;
 
@@ -10,6 +11,8 @@ namespace Comasy.Web
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDataLayer(builder.Configuration);
+
+            builder.Services.AddServiceLayer();
 
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {

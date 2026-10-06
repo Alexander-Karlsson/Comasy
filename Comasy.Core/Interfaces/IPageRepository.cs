@@ -8,6 +8,7 @@ namespace Comasy.Core.Interfaces
         Task<IEnumerable<Page>> GetAllAsync();
         Task<Page?> GetByIdAsync(int id);
         Task<Page?> GetBySlugAsync(string slug);
+        Task<bool> SlugExistsAsync(string slug);
         Task<Page> AddAsync(Page page);
         Task UpdateAsync(Page page);
         Task DeleteAsync(int id);
