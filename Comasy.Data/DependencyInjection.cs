@@ -14,10 +14,19 @@ namespace Comasy.Data
         {
             services.AddDbContext<ComasyDbContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection")));
+                    configuration.GetConnectionString("DefaultConnection"),
+                    // Azure SQL kan tappa eller strypa anslutningar en kort stund (failover,
+                    // lastbalansering, tillfälliga nätverksstörningar). Det är transienta fel:
+                    // en ny försökning lyckas oftast. EnableRetryOnFailure gör att EF Core
+                    // kör om kommandot i stället för att begäran misslyckas direkt.
+                    sqlOptions => sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(10),
+                        errorNumbersToAdd: null)));
 
             services.AddScoped<IPageRepository, PageRepository>();
             services.AddScoped<IMenuItemRepository, MenuItemRepository>();
+            services.AddScoped<IContentBlockRepository, ContentBlockRepository>();
 
 
             return services;

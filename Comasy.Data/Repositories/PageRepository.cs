@@ -48,26 +48,30 @@ namespace Comasy.Data.Repositories
         }
 
         /// <summary>
-        /// Gets the page with the given id, including its content blocks.
+        /// Gets the page with the given id, including its content blocks ordered by sort order.
         /// </summary>
         /// <param name="id">The id of the page to get.</param>
         /// <returns>The page if it exists, published or not; otherwise, null.</returns>
         public async Task<Page?> GetByIdAsync(int id)
         {
             return await context.Pages
-                .Include(p => p.ContentBlocks)
+                .Include(p => p.ContentBlocks.OrderBy(b => b.SortOrder))
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         /// <summary>
-        /// Gets the published page with the given slug, including its content blocks.
+        /// Gets the published page with the given slug, including its content blocks ordered by sort order.
         /// </summary>
+        /// <remarks>
+        /// The page is not tracked by the context, so changes to it are not saved.
+        /// </remarks>
         /// <param name="slug">The slug of the page to get.</param>
         /// <returns>The page if it exists and is published; otherwise, null.</returns>
         public async Task<Page?> GetBySlugAsync(string slug)
         {
             return await context.Pages
-                .Include(p => p.ContentBlocks)
+                .AsNoTracking()
+                .Include(p => p.ContentBlocks.OrderBy(b => b.SortOrder))
                 .FirstOrDefaultAsync(p => p.Slug == slug && p.IsPublished);
         }
 

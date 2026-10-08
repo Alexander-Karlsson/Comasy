@@ -44,8 +44,9 @@ public class ContentBlockService(IContentBlockRepository blockRepository)
             .GetByPageAsync(current.PageId, current.Zone)).ToList();
 
         var index = siblings.FindIndex(b => b.Id == id);
-        var targetIndex = index + direction;
+        if (index < 0) return;
 
+        var targetIndex = index + direction;
         if (targetIndex < 0 || targetIndex >= siblings.Count) return;
 
         var neighbour = await blockRepository.GetByIdAsync(siblings[targetIndex].Id);
