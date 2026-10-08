@@ -1,0 +1,30 @@
+@using Comasy.Core.Enums
+@model Comasy.Web.Models.PageViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<article class="page-content">
+    @foreach (var block in Model.MainBlocks)
+    {
+        switch (block.BlockType)
+        {
+            case BlockType.Heading:
+                <h1 class="cms-heading">@block.Text</h1>
+                break;
+
+            case BlockType.Text:
+                <p class="cms-text">@block.Text</p>
+                break;
+
+            case BlockType.Image:
+                <img class="cms-image img-fluid" src="@block.ImageUrl" alt="@block.AltText" />
+                break;
+
+            case BlockType.Link:
+                <a class="cms-link" href="@block.LinkUrl">@block.LinkText</a>
+                break;
+        }
+    }
+</article>

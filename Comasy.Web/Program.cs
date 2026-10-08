@@ -60,9 +60,20 @@ namespace Comasy.Web
             app.UseAuthorization();
 
             app.MapStaticAssets();
+            
+            app.MapControllerRoute(
+                name: "home",
+                pattern: "",
+                defaults: new { controller = "Page", action = "Index", slug = "valkommen" });
+            
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+            
+            app.MapControllerRoute(
+                name: "page",
+                pattern: "{slug}",
+                defaults: new  { controller = "Page", action = "Index" })
                 .WithStaticAssets();
 
             app.Run();

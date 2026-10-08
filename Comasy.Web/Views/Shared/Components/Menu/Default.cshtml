@@ -1,0 +1,10 @@
+@model IEnumerable<Comasy.Core.Entities.MenuItem>
+
+<ul class="navbar-nav">
+    @foreach (var item in Model)
+    {
+        <li class="nav-item">
+            <a class="nav-link" href="/@item.Page?.Slug">@item.Text</a>
+        </li>
+    }
+</ul>
