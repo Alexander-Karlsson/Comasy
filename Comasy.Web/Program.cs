@@ -6,7 +6,7 @@ namespace Comasy.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +33,17 @@ namespace Comasy.Web
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+            
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<ComasyDbContext>();
+                var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                var adminPassword = builder.Configuration["SeedAdminPassword"] ?? "Comasy2026!";
+
+                await DbSeeder.SeedAsync(context, userManager, roleManager, adminPassword);
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
