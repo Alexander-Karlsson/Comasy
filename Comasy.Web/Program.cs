@@ -64,18 +64,25 @@ namespace Comasy.Web
             app.MapStaticAssets();
             
             app.MapControllerRoute(
-                name: "home",
-                pattern: "",
-                defaults: new { controller = "Page", action = "Index", slug = "valkommen" });
-            
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}")
+                .WithStaticAssets();
+
             app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
-            
+                    name: "home",
+                    pattern: "",
+                    defaults: new { controller = "Page", action = "Index", slug = "valkommen" })
+                .WithStaticAssets();
+
             app.MapControllerRoute(
-                name: "page",
-                pattern: "{slug}",
-                defaults: new  { controller = "Page", action = "Index" })
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}")
+                .WithStaticAssets();
+
+            app.MapControllerRoute(
+                    name: "page",
+                    pattern: "{slug}",
+                    defaults: new { controller = "Page", action = "Index" })
                 .WithStaticAssets();
 
             app.Run();

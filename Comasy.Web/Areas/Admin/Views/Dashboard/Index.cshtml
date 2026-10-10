@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "Översikt";
+}
+
+<h1 class="mb-4">Översikt</h1>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="h5 card-title">Sidor</h2>
+                <p class="card-text">
+                    Skapa, redigera och publicera sidorna på webbplatsen.
+                </p>
+                <a class="btn btn-primary"
+                   asp-area="Admin" asp-controller="Pages" asp-action="Index">
+                    Hantera sidor
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="h5 card-title">Meny</h2>
+                <p class="card-text">
+                    Lägg till menyalternativ och ändra deras ordning.
+                </p>
+                <a class="btn btn-primary"
+                   asp-area="Admin" asp-controller="Menu" asp-action="Index">
+                    Hantera meny
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
