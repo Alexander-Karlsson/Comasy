@@ -1,0 +1,40 @@
+@model Comasy.Web.Models.MenuItemFormViewModel
+
+<input type="hidden" asp-for="Id" />
+
+<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+<div class="mb-3">
+    <label asp-for="Text" class="form-label"></label>
+    <input asp-for="Text" class="form-control" autofocus />
+    <span asp-validation-for="Text" class="text-danger"></span>
+    <div class="form-text">
+        Behöver inte vara samma som sidans titel. Korta texter fungerar bäst i en meny.
+    </div>
+</div>
+
+<div class="mb-3">
+    <label asp-for="PageId" class="form-label"></label>
+    <select asp-for="PageId" asp-items="Model.AvailablePages" class="form-select">
+        <option value="">— Välj sida —</option>
+    </select>
+    <span asp-validation-for="PageId" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="ParentId" class="form-label"></label>
+    <select asp-for="ParentId" asp-items="Model.AvailableParents" class="form-select">
+        <option value="">— Visa i huvudmenyn —</option>
+    </select>
+    <div class="form-text">
+        Väljer du ett alternativ här hamnar posten som undermeny till det.
+    </div>
+</div>
+
+<div class="form-check mb-4">
+    <input asp-for="IsVisible" class="form-check-input" />
+    <label asp-for="IsVisible" class="form-check-label"></label>
+    <div class="form-text">
+        Dolda alternativ finns kvar men syns inte för besökare.
+    </div>
+</div>

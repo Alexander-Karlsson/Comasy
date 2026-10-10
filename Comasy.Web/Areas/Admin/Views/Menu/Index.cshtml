@@ -1,0 +1,44 @@
+@model Comasy.Web.Models.MenuListViewModel
+
+@{
+    ViewData["Title"] = "Meny";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Meny</h1>
+    <a class="btn btn-primary" asp-action="Create">Nytt menyalternativ</a>
+</div>
+
+@if (!Model.TopLevel.Any())
+{
+    <div class="alert alert-info">
+        Menyn är tom. Lägg till det första alternativet med knappen ovan.
+    </div>
+}
+else
+{
+    <div class="list-group">
+        @for (var i = 0; i < Model.TopLevel.Count; i++)
+        {
+            var item = Model.TopLevel[i];
+
+            <div class="list-group-item">
+                <partial name="_MenuRow" model="@(new MenuRowData(item, i == 0, i == Model.TopLevel.Count - 1, false))" />
+
+                @if (item.Children.Any())
+                {
+                    var children = item.Children.ToList();
+
+                    <div class="ms-4 mt-2 border-start ps-3">
+                        @for (var j = 0; j < children.Count; j++)
+                        {
+                            <div class="py-1">
+                                <partial name="_MenuRow" model="@(new MenuRowData(children[j], j == 0, j == children.Count - 1, true))" />
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+}

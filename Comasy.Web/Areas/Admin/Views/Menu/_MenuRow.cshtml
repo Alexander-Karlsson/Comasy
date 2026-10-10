@@ -1,0 +1,37 @@
+@model MenuRowData
+
+@{
+    var item = Model.Item;
+}
+
+<div class="d-flex justify-content-between align-items-center gap-3">
+    <div class="flex-grow-1">
+        <span class="@(Model.IsChild ? "" : "fw-semibold")">@item.Text</span>
+
+        @if (!item.IsVisible)
+        {
+            <span class="badge text-bg-secondary ms-2">Dold</span>
+        }
+
+        <span class="text-muted small ms-2">
+            → @(item.Page?.Title ?? "okänd sida")
+        </span>
+    </div>
+
+    <div class="d-flex gap-1 flex-shrink-0">
+        <form asp-action="MoveUp" asp-route-id="@item.Id" method="post">
+            <button type="submit" class="btn btn-sm btn-outline-secondary"
+                    title="Flytta upp" @(Model.IsFirst ? "disabled" : "")>↑</button>
+        </form>
+        <form asp-action="MoveDown" asp-route-id="@item.Id" method="post">
+            <button type="submit" class="btn btn-sm btn-outline-secondary"
+                    title="Flytta ned" @(Model.IsLast ? "disabled" : "")>↓</button>
+        </form>
+        <a class="btn btn-sm btn-outline-primary"
+           asp-action="Edit" asp-route-id="@item.Id">Redigera</a>
+        <form asp-action="Delete" asp-route-id="@item.Id" method="post">
+            <button type="submit" class="btn btn-sm btn-outline-danger"
+                    onclick="return confirm('Ta bort menyalternativet?');">Ta bort</button>
+        </form>
+    </div>
+</div>

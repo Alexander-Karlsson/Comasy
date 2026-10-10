@@ -3,8 +3,34 @@
 <ul class="navbar-nav">
     @foreach (var item in Model)
     {
-        <li class="nav-item">
-            <a class="nav-link" href="/@item.Page?.Slug">@item.Text</a>
-        </li>
+        var children = item.Children.ToList();
+
+        if (children.Count == 0)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="/@item.Page?.Slug">@item.Text</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    @item.Text
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" href="/@item.Page?.Slug">@item.Text</a>
+                    </li>
+                    <li><hr class="dropdown-divider" /></li>
+                    @foreach (var child in children)
+                    {
+                        <li>
+                            <a class="dropdown-item" href="/@child.Page?.Slug">@child.Text</a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
     }
 </ul>
