@@ -53,8 +53,10 @@ else
                                    asp-area="" asp-controller="Page" asp-action="Index"
                                    asp-route-slug="@item.Slug" target="_blank">Visa</a>
                             }
+                            <a class="btn btn-primary"
+                               asp-controller="Content" asp-action="Index" asp-route-id="@item.Id">Innehåll</a>
                             <a class="btn btn-outline-primary"
-                               asp-action="Edit" asp-route-id="@item.Id">Redigera</a>
+                               asp-action="Edit" asp-route-id="@item.Id">Inställningar</a>
                             <form asp-action="Delete" asp-route-id="@item.Id" method="post">
                                 <button type="submit" class="btn btn-outline-danger"
                                         onclick="return confirm('Radera sidan? Allt innehåll och eventuella menyposter försvinner.');">

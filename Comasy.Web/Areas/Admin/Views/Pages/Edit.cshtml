@@ -1,12 +1,16 @@
 @model Comasy.Web.Models.EditPageViewModel
 
 @{
-    ViewData["Title"] = "Redigera sida";
+    ViewData["Title"] = "Sidinställningar";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="mb-0">Redigera sida</h1>
-    <a class="btn btn-outline-secondary" asp-action="Index">Tillbaka till listan</a>
+    <h1 class="mb-0">Sidinställningar</h1>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-secondary" asp-action="Index">Alla sidor</a>
+        <a class="btn btn-primary"
+           asp-controller="Content" asp-action="Index" asp-route-id="@Model.Id">Innehåll</a>
+    </div>
 </div>
 
 <div class="row">

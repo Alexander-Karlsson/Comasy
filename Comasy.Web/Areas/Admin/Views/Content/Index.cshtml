@@ -1,0 +1,116 @@
+@model Comasy.Web.Models.ContentListViewModel
+
+@{
+    ViewData["Title"] = $"Innehåll – {Model.PageTitle}";
+}
+
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <h1 class="mb-1">@Model.PageTitle</h1>
+        <div class="text-muted">
+            <code>/@Model.PageSlug</code>
+            @if (Model.IsPublished)
+            {
+                <span class="badge text-bg-success ms-2">Publicerad</span>
+            }
+            else
+            {
+                <span class="badge text-bg-secondary ms-2">Utkast</span>
+            }
+        </div>
+    </div>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-secondary"
+           asp-controller="Pages" asp-action="Index">Alla sidor</a>
+        <a class="btn btn-outline-secondary"
+           asp-controller="Pages" asp-action="Edit" asp-route-id="@Model.PageId">Sidinställningar</a>
+        <a class="btn btn-primary"
+           asp-action="Create" asp-route-pageId="@Model.PageId">Lägg till innehåll</a>
+    </div>
+</div>
+
+@if (!Model.Blocks.Any())
+{
+    <div class="alert alert-info">
+        Sidan är tom. Lägg till en rubrik, text, bild eller länk med knappen ovan.
+    </div>
+}
+else
+{
+    <div class="list-group">
+        @for (var i = 0; i < Model.Blocks.Count; i++)
+        {
+            var block = Model.Blocks[i];
+
+            <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-start gap-3">
+
+                    <div class="flex-grow-1">
+                        <span class="badge text-bg-dark mb-2">@BlockTypeName(block.BlockType)</span>
+
+                        @switch (block.BlockType)
+                        {
+                            case BlockType.Heading:
+                                <div class="fw-bold fs-5">@block.Text</div>
+                                break;
+
+                            case BlockType.Text:
+                                <div class="text-body">@Truncate(block.Text, 200)</div>
+                                break;
+
+                            case BlockType.Image:
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="@block.ImageUrl" alt="@block.AltText"
+                                         style="max-height: 60px; max-width: 120px;" />
+                                    <span class="text-muted small">@block.AltText</span>
+                                </div>
+                                break;
+
+                            case BlockType.Link:
+                                <div>
+                                    <span class="text-body">@block.LinkText</span>
+                                    <span class="text-muted small ms-2">→ @block.LinkUrl</span>
+                                </div>
+                                break;
+                        }
+                    </div>
+
+                    <div class="d-flex gap-1 flex-shrink-0">
+                        <form asp-action="MoveUp" asp-route-id="@block.Id" method="post">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                    title="Flytta upp" @(i == 0 ? "disabled" : "")>↑</button>
+                        </form>
+                        <form asp-action="MoveDown" asp-route-id="@block.Id" method="post">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                    title="Flytta ned" @(i == Model.Blocks.Count - 1 ? "disabled" : "")>↓</button>
+                        </form>
+                        <a class="btn btn-sm btn-outline-primary"
+                           asp-action="Edit" asp-route-id="@block.Id">Redigera</a>
+                        <form asp-action="Delete" asp-route-id="@block.Id" method="post">
+                            <button type="submit" class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Ta bort det här innehållet?');">Ta bort</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@functions {
+    private static string BlockTypeName(BlockType type) => type switch
+    {
+        BlockType.Heading => "Rubrik",
+        BlockType.Text => "Text",
+        BlockType.Image => "Bild",
+        BlockType.Link => "Länk",
+        _ => type.ToString()
+    };
+
+    private static string Truncate(string? text, int maxLength)
+    {
+        if (string.IsNullOrEmpty(text)) return string.Empty;
+        return text.Length <= maxLength ? text : text[..maxLength] + "…";
+    }
+}

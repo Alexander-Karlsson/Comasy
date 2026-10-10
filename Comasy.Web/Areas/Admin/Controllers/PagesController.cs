@@ -46,8 +46,8 @@ public class PagesController(IPageService pageService) : Controller
 
         var page = await pageService.CreatePageAsync(model.Title);
 
-        TempData["Message"] = $"Sidan \"{page.Title}\" skapades.";
-        return RedirectToAction(nameof(Edit), new { id = page.Id });
+        TempData["Message"] = $"Sidan \"{page.Title}\" skapades. Lägg till innehåll nedan.";
+        return RedirectToAction("Index", "Content", new { id = page.Id });
     }
 
     [HttpGet]
@@ -69,7 +69,7 @@ public class PagesController(IPageService pageService) : Controller
         });
     }
 
-    // Sluggen ändras aldrig – den är sidans adress.
+    // Sluggen ändras aldrig så den är sidans adress.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(EditPageViewModel model)

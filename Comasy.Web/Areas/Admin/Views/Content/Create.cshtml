@@ -1,0 +1,27 @@
+@model Comasy.Web.Models.ContentBlockFormViewModel
+
+@{
+    ViewData["Title"] = "Nytt innehåll";
+}
+
+<h1 class="mb-1">Nytt innehåll</h1>
+<p class="text-muted mb-4">på sidan @Model.PageTitle</p>
+
+<div class="row">
+    <div class="col-md-7">
+        <form asp-action="Create" method="post">
+            <partial name="_BlockForm" model="Model" />
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Lägg till</button>
+                <a class="btn btn-outline-secondary"
+                   asp-action="Index" asp-route-id="@Model.PageId">Avbryt</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/blockform.js" asp-append-version="true"></script>
+}
