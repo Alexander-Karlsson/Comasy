@@ -40,7 +40,9 @@ namespace Comasy.Web
                 var context = services.GetRequiredService<ComasyDbContext>();
                 var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                var adminPassword = builder.Configuration["SeedAdminPassword"] ?? "Comasy2026!";
+                var adminPassword = builder.Configuration["SeedAdminPassword"] 
+                                    ?? throw new InvalidOperationException(
+                                        "SeedAdminPassword saknas i konfig.");
 
                 await DbSeeder.SeedAsync(context, userManager, roleManager, adminPassword);
             }
