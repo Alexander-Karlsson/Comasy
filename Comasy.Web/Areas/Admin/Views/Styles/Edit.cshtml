@@ -1,0 +1,78 @@
+@model Comasy.Web.Models.SiteStyleFormViewModel
+@using Comasy.Core.Enums
+
+@{
+    ViewData["Title"] = $"Utseende – {Model.ElementName}";
+}
+
+<h1 class="mb-4">@Model.ElementName</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Element" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            @if (Model.Element != StyleElement.Image)
+            {
+                <div class="mb-3">
+                    <label asp-for="FontFamily" class="form-label"></label>
+                    <input asp-for="FontFamily" class="form-control" placeholder="Georgia, serif" />
+                    <span asp-validation-for="FontFamily" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FontSize" class="form-label"></label>
+                    <input asp-for="FontSize" class="form-control" placeholder="18px" />
+                    <span asp-validation-for="FontSize" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Color" class="form-label"></label>
+                    <input asp-for="Color" class="form-control" placeholder="#336699" />
+                    <span asp-validation-for="Color" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FontWeight" class="form-label"></label>
+                    <input asp-for="FontWeight" class="form-control" placeholder="normal" />
+                    <span asp-validation-for="FontWeight" class="text-danger"></span>
+                </div>
+            }
+
+            @if (Model.Element == StyleElement.Link)
+            {
+                <div class="mb-3">
+                    <label asp-for="TextDecoration" class="form-label"></label>
+                    <input asp-for="TextDecoration" class="form-control" placeholder="underline" />
+                    <span asp-validation-for="TextDecoration" class="text-danger"></span>
+                </div>
+            }
+
+            @if (Model.Element == StyleElement.Image)
+            {
+                <div class="mb-3">
+                    <label asp-for="MaxWidth" class="form-label"></label>
+                    <input asp-for="MaxWidth" class="form-control" placeholder="100%" />
+                    <span asp-validation-for="MaxWidth" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="BorderRadius" class="form-label"></label>
+                    <input asp-for="BorderRadius" class="form-control" placeholder="8px" />
+                    <span asp-validation-for="BorderRadius" class="text-danger"></span>
+                </div>
+            }
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Spara</button>
+                <a class="btn btn-outline-secondary" asp-action="Index">Avbryt</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
