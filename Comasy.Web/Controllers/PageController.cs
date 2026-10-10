@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Comasy.Web.Controllers;
 
-public class PageController(IPageService pageService, IContentBlockService blockService) : Controller
+public class PageController(IPageService pageService, IContentBlockService blockService, 
+    IStatisticsService statisticsService) : Controller
 {
     public async Task<IActionResult> Index(string slug)
     {
@@ -16,10 +17,13 @@ public class PageController(IPageService pageService, IContentBlockService block
             return NotFound();
         }
 
+        await statisticsService.RegisterViewAsync(page.Id);
+
         var model = new PageViewModel
         {
             Title = page.Title,
-            MainBlocks = (await blockService.GetForPageAsync(page.Id, ContentZone.Main)).ToList()
+            MainBlocks = (await blockService.GetForPageAsync(page.Id, ContentZone.Main)).ToList(),
+            ViewCount = await statisticsService.GetViewCountAsync(page.Id)
         };
 
         return View(model);

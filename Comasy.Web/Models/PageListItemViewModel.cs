@@ -7,4 +7,5 @@ public class PageListItemViewModel
     public string Slug { get; set; } = string.Empty;
     public bool IsPublished { get; set; }
     public DateTime CreatedAt { get; set; }
+    public int ViewCount { get; set; }
 }

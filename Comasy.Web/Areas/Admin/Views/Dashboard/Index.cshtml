@@ -1,8 +1,45 @@
+@model Comasy.Web.Models.DashboardViewModel
+
 @{
     ViewData["Title"] = "Översikt";
 }
 
 <h1 class="mb-4">Översikt</h1>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <div class="fs-2 fw-bold">@Model.PageCount</div>
+                <div class="text-muted small">Sidor totalt</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <div class="fs-2 fw-bold">@Model.PublishedCount</div>
+                <div class="text-muted small">Publicerade</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <div class="fs-2 fw-bold">@Model.MenuItemCount</div>
+                <div class="text-muted small">Menyalternativ</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <div class="fs-2 fw-bold">@Model.ViewsLastWeek</div>
+                <div class="text-muted small">Besök senaste veckan</div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row g-3">
     <div class="col-md-6">

@@ -6,4 +6,5 @@ public class PageViewModel
 {
     public string Title { get; set; } = string.Empty;
     public List<ContentBlock> MainBlocks { get; set; } = [];
+    public int ViewCount { get; set; }
 }
