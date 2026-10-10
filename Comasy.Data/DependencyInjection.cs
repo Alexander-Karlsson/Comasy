@@ -27,6 +27,7 @@ namespace Comasy.Data
             services.AddScoped<IPageRepository, PageRepository>();
             services.AddScoped<IMenuItemRepository, MenuItemRepository>();
             services.AddScoped<IContentBlockRepository, ContentBlockRepository>();
+            services.AddScoped<IPageViewRepository, PageViewRepository>();
 
 
             return services;
