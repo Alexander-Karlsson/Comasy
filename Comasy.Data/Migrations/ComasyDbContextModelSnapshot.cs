@@ -148,6 +148,46 @@ namespace Comasy.Data.Migrations
                     b.ToTable("PageViews");
                 });
 
+            modelBuilder.Entity("Comasy.Core.Entities.SiteStyle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BorderRadius")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Element")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FontFamily")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FontSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FontWeight")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaxWidth")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TextDecoration")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Element")
+                        .IsUnique();
+
+                    b.ToTable("SiteStyles");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")

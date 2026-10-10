@@ -67,6 +67,7 @@ public class MenuService(IMenuItemRepository menuItemRepository) : IMenuService
         var siblings = all
             .Where(m => m.ParentId == current.ParentId)
             .OrderBy(m => m.SortOrder)
+            .ThenBy(m => m.Id)
             .ToList();
 
         var index = siblings.FindIndex(m => m.Id == id);
@@ -74,13 +75,22 @@ public class MenuService(IMenuItemRepository menuItemRepository) : IMenuService
 
         if (targetIndex < 0 || targetIndex >= siblings.Count) return;
 
-        var a = await menuItemRepository.GetByIdAsync(id);
-        var b = await menuItemRepository.GetByIdAsync(siblings[targetIndex].Id);
-        if (a is null || b is null) return;
+        // Flytta posten i listan
+        var moved = siblings[index];
+        siblings.RemoveAt(index);
+        siblings.Insert(targetIndex, moved);
 
-        (a.SortOrder, b.SortOrder) = (b.SortOrder, a.SortOrder);
+        // Numrera om 
+        for (var i = 0; i < siblings.Count; i++)
+        {
+            var item = await menuItemRepository.GetByIdAsync(siblings[i].Id);
+            if (item is null) continue;
 
-        await menuItemRepository.UpdateAsync(a);
-        await menuItemRepository.UpdateAsync(b);
+            var newSortOrder = (i + 1) * 10;
+            if (item.SortOrder == newSortOrder) continue;
+
+            item.SortOrder = newSortOrder;
+            await menuItemRepository.UpdateAsync(item);
+        }
     }
 }

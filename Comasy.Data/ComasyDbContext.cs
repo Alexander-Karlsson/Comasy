@@ -17,6 +17,7 @@ namespace Comasy.Data
         public DbSet<ContentBlock> ContentBlocks => Set<ContentBlock>();
         public DbSet<MenuItem> MenuItems => Set<MenuItem>();
         public DbSet<PageView> PageViews => Set<PageView>();
+        public DbSet<SiteStyle> SiteStyles => Set<SiteStyle>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -37,6 +38,10 @@ namespace Comasy.Data
                 .WithMany(m => m.Children)
                 .HasForeignKey(m => m.ParentId)
                 .OnDelete(DeleteBehavior.Restrict);
+            
+            builder.Entity<SiteStyle>()
+                .HasIndex(s => s.Element)
+                .IsUnique();
         }
 
 
