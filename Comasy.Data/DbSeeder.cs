@@ -53,15 +53,15 @@ public static class DbSeeder
                     BlockType = BlockType.Heading,
                     Zone = ContentZone.Main,
                     SortOrder = 10,
-                    Text = "Välkommen till Comasy!"
+                    Text = "Welcome till Comasy!"
                 },
                 new ContentBlock
                 {
                     BlockType = BlockType.Text,
                     Zone = ContentZone.Main,
                     SortOrder = 20,
-                    Text = "Den här sidan finns inte som en fil i projektet. " +
-                           "Den är rader i en databas, renderade av en enda vy."
+                    Text = "The sjukaste CMS in the hela world! " +
+                           "Rendering Views rakt från the database."
                 }
             ]
         };
@@ -85,7 +85,7 @@ public static class DbSeeder
                     BlockType = BlockType.Text,
                     Zone = ContentZone.Main,
                     SortOrder = 20,
-                    Text = "Comasy är ett av världens bästa publiceringssystem."
+                    Text = "Comasy is one (1) av the världs best publiceringssystem (for pros)."
                 },
                 new ContentBlock
                 {
@@ -93,7 +93,7 @@ public static class DbSeeder
                     Zone = ContentZone.Main,
                     SortOrder = 30,
                     LinkUrl = "/valkommen",
-                    LinkText = "Tillbaka till startsidan"
+                    LinkText = "Back to the startsidan"
                 }
             ]
         };
