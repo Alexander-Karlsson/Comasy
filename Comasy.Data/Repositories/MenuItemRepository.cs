@@ -40,14 +40,13 @@ namespace Comasy.Data.Repositories
         /// </remarks>
         /// <returns>All menu items as a flat list, both visible and hidden.</returns>
         public async Task<IEnumerable<MenuItem>> GetAllAsync()
-        {
-            return await context.MenuItems
+            => await context.MenuItems
                 .AsNoTracking()
                 .Include(m => m.Page)
                 .OrderBy(m => m.ParentId)
                 .ThenBy(m => m.SortOrder)
                 .ToListAsync(); 
-        }
+        
 
         /// <summary>
         /// Gets the menu item with the given id, without its linked page or children.
@@ -55,9 +54,8 @@ namespace Comasy.Data.Repositories
         /// <param name="id">The id of the menu item to get.</param>
         /// <returns>The menu item if it exists; otherwise, null.</returns>
         public async Task<MenuItem?> GetByIdAsync(int id)
-        {
-            return await context.MenuItems.FirstOrDefaultAsync(m => m.Id == id);  
-        }
+            => await context.MenuItems.FirstOrDefaultAsync(m => m.Id == id);  
+        
 
         /// <summary>
         /// Gets the visible top-level menu items with their visible children, ordered by sort order.
@@ -69,8 +67,7 @@ namespace Comasy.Data.Repositories
         /// </remarks>
         /// <returns>The visible top-level menu items, each with its visible children.</returns>
         public async Task<IEnumerable<MenuItem>> GetMenuAsync()
-        {
-            return await context.MenuItems
+            => await context.MenuItems
                 .AsNoTracking()
                 .Where(m => m.IsVisible && m.ParentId == null)
                 .Where(m => m.Page == null || m.Page.IsPublished)
@@ -81,7 +78,7 @@ namespace Comasy.Data.Repositories
                 .ThenInclude(c => c.Page)
                 .OrderBy(m => m.SortOrder)
                 .ToListAsync();
-        }
+        
         
         /// <summary>
         /// Updates an existing menu item and saves the changes to the database.

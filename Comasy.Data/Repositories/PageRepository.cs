@@ -40,12 +40,11 @@ namespace Comasy.Data.Repositories
         /// </remarks>
         /// <returns>All pages, both published and unpublished.</returns>
         public async Task<IEnumerable<Page>> GetAllAsync()
-        {
-            return await context.Pages
+            => await context.Pages
                 .AsNoTracking()
                 .OrderBy(p => p.Title)
                 .ToListAsync();
-        }
+        
 
         /// <summary>
         /// Gets the page with the given id, including its content blocks ordered by sort order.
@@ -53,11 +52,10 @@ namespace Comasy.Data.Repositories
         /// <param name="id">The id of the page to get.</param>
         /// <returns>The page if it exists, published or not; otherwise, null.</returns>
         public async Task<Page?> GetByIdAsync(int id)
-        {
-            return await context.Pages
+            => await context.Pages
                 .Include(p => p.ContentBlocks.OrderBy(b => b.SortOrder))
                 .FirstOrDefaultAsync(p => p.Id == id);
-        }
+        
 
         /// <summary>
         /// Gets the published page with the given slug, including its content blocks ordered by sort order.
@@ -68,12 +66,11 @@ namespace Comasy.Data.Repositories
         /// <param name="slug">The slug of the page to get.</param>
         /// <returns>The page if it exists and is published; otherwise, null.</returns>
         public async Task<Page?> GetBySlugAsync(string slug)
-        {
-            return await context.Pages
+            => await context.Pages
                 .AsNoTracking()
                 .Include(p => p.ContentBlocks.OrderBy(b => b.SortOrder))
                 .FirstOrDefaultAsync(p => p.Slug == slug && p.IsPublished);
-        }
+        
 
         /// <summary>
         /// Checks if a page with the given slug already exists.
@@ -81,9 +78,8 @@ namespace Comasy.Data.Repositories
         /// <param name="slug">The slug to check.</param>
         /// <returns>True if a page with the slug exists; otherwise, false.</returns> 
         public async Task<bool> SlugExistsAsync(string slug)
-        {
-            return await context.Pages.AnyAsync(p => p.Slug == slug);
-        }
+            => await context.Pages.AnyAsync(p => p.Slug == slug);
+        
 
         /// <summary>
         /// Updates an existing page and saves the changes to the database.

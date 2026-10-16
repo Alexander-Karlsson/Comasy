@@ -37,11 +37,9 @@ namespace Comasy.Data.Repositories
         /// </summary>
         /// <param name="id">The id of the content block to get.</param>
         /// <returns>The content block if it exists; otherwise, null.</returns>
-        public async Task<ContentBlock?> GetByIdAsync(int id)
-        {
-            return await context.ContentBlocks
-                .FirstOrDefaultAsync(b => b.Id == id);
-        }
+        public async Task<ContentBlock?> GetByIdAsync(int id) 
+            => await context.ContentBlocks.FirstOrDefaultAsync(b => b.Id == id);
+        
 
         /// <summary>
         /// Gets the content blocks in the given zone of a page, ordered by sort order.
@@ -53,13 +51,12 @@ namespace Comasy.Data.Repositories
         /// <param name="zone">The zone of the page to get content blocks from.</param>
         /// <returns>The matching content blocks, or an empty collection if there are none.</returns>
         public async Task<IEnumerable<ContentBlock>> GetByPageAsync(int pageId, ContentZone zone)
-        {
-            return await context.ContentBlocks
+            => await context.ContentBlocks
                 .AsNoTracking()
                 .Where(b => b.PageId == pageId && b.Zone == zone)
                 .OrderBy(b => b.SortOrder)
                 .ToListAsync();
-        }
+        
 
         /// <summary>
         /// Updates an existing content block and saves the changes to the database.

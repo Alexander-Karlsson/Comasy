@@ -8,18 +8,16 @@ namespace Comasy.Data.Repositories;
 internal class SiteStyleRepository(ComasyDbContext context) : ISiteStyleRepository
 {
     public async Task<IEnumerable<SiteStyle>> GetAllAsync()
-    {
-        return await context.SiteStyles
+        => await context.SiteStyles
             .AsNoTracking()
             .OrderBy(s => s.Element)
             .ToListAsync();
-    }
+    
 
     public async Task<SiteStyle?> GetByElementAsync(StyleElement element)
-    {
-        return await context.SiteStyles
+        => await context.SiteStyles
             .FirstOrDefaultAsync(s => s.Element == element);
-    }
+    
 
     public async Task UpsertAsync(SiteStyle style)
     {

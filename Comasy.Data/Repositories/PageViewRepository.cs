@@ -13,25 +13,22 @@ public class PageViewRepository(ComasyDbContext context) : IPageViewRepository
     }
 
     public async Task<int> GetCountForPageAsync(int pageId)
-    {
-        return await context.PageViews
+        => await context.PageViews
             .AsNoTracking()
             .CountAsync(v => v.PageId == pageId);
-    }
+    
 
     public async Task<Dictionary<int, int>> GetCountsPerPageAsync()
-    {
-        return await context.PageViews
+        => await context.PageViews
             .AsNoTracking()
             .GroupBy(v => v.PageId)
             .Select(g => new { PageId = g.Key, Count = g.Count() })
             .ToDictionaryAsync(x => x.PageId, x => x.Count);
-    }
+    
 
     public async Task<int> GetTotalCountSinceAsync(DateTime from)
-    {
-        return await context.PageViews
+        => await context.PageViews
             .AsNoTracking()
             .CountAsync(v => v.ViewedAt >= from);
-    }
+    
 }
