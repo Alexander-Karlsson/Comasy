@@ -11,6 +11,5 @@ namespace Comasy.Core.Entities
 
         // Nav Prop
         public ICollection<ContentBlock> ContentBlocks { get; set; } = new List<ContentBlock>();
-        public ICollection<PageView> PageViews { get; set; } = new List<PageView>();
     }
 }

@@ -1,5 +1,7 @@
 using Comasy.Core;
+using Comasy.Core.Interfaces;
 using Comasy.Data;
+using Comasy.Web.Services;
 using Microsoft.AspNetCore.Identity;
 
 namespace Comasy.Web
@@ -28,6 +30,16 @@ namespace Comasy.Web
                 options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Account/Denied";
             }); 
+            
+            builder.Services.AddHttpClient<IStatisticsService, StatisticsApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(
+                    builder.Configuration["Statistics:BaseUrl"]
+                    ?? throw new InvalidOperationException(
+                        "Statistics:BaseUrl saknas i konfigurationen."));
+
+                client.Timeout = TimeSpan.FromSeconds(2);
+            });
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

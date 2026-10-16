@@ -1,5 +1,4 @@
 using Comasy.Api.Data;
-using Comasy.Api.Entities;
 using Comasy.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +14,7 @@ public static class DependencyInjection
                 configuration.GetConnectionString("StatisticsConnection"),
                 sqlOptions =>
                 {
-                    sqlOptions.MigrationsHistoryTable("__EFMigrationsHistoryStatistics");
+                    sqlOptions.MigrationsHistoryTable("__EFMigrationsHistory", "stats");
 
                     sqlOptions.EnableRetryOnFailure(
                         maxRetryCount: 10,

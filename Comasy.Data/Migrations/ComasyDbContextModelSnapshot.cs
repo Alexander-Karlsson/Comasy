@@ -127,27 +127,6 @@ namespace Comasy.Data.Migrations
                     b.ToTable("Pages");
                 });
 
-            modelBuilder.Entity("Comasy.Core.Entities.PageView", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PageId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ViewedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PageId");
-
-                    b.ToTable("PageViews");
-                });
-
             modelBuilder.Entity("Comasy.Core.Entities.SiteStyle", b =>
                 {
                     b.Property<int>("Id")
@@ -415,17 +394,6 @@ namespace Comasy.Data.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Comasy.Core.Entities.PageView", b =>
-                {
-                    b.HasOne("Comasy.Core.Entities.Page", "Page")
-                        .WithMany("PageViews")
-                        .HasForeignKey("PageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Page");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -485,8 +453,6 @@ namespace Comasy.Data.Migrations
             modelBuilder.Entity("Comasy.Core.Entities.Page", b =>
                 {
                     b.Navigation("ContentBlocks");
-
-                    b.Navigation("PageViews");
                 });
 #pragma warning restore 612, 618
         }

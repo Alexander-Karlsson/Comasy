@@ -16,7 +16,7 @@ namespace Comasy.Data
         public DbSet<Page> Pages => Set<Page>();
         public DbSet<ContentBlock> ContentBlocks => Set<ContentBlock>();
         public DbSet<MenuItem> MenuItems => Set<MenuItem>();
-        public DbSet<PageView> PageViews => Set<PageView>();
+        
         public DbSet<SiteStyle> SiteStyles => Set<SiteStyle>();
 
         protected override void OnModelCreating(ModelBuilder builder)
